@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+
 const Navigation = () => {
   return (
     <div className="hamburger-menu">
@@ -9,17 +10,17 @@ const Navigation = () => {
           <div className="nav-title">Menu</div>
           <div className="nav-links">
             <div data-text="Home" className="nav-link">
-              <NavLink exact activeClassName="active-link" to="/">
+              <NavLink end className={({ isActive }) => (isActive ? "active-link" : "")} to="/">
                 Home
               </NavLink>
             </div>
             <div data-text="About Me" className="nav-link">
-              <NavLink activeClassName="active-link" to="/about">
+              <NavLink className={({ isActive }) => (isActive ? "active-link" : "")} to="/about">
                 About me
               </NavLink>
             </div>
             <div data-text="Contact" className="nav-link">
-              <NavLink activeClassName="active-link" to="/contact">
+              <NavLink className={({ isActive }) => (isActive ? "active-link" : "")} to="/contact">
                 Contact
               </NavLink>
             </div>

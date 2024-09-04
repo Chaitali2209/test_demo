@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { openMenu, closeMenu } from "../animations";
 import { ReactComponent as Logo } from "../assets/images/logo-full.svg";
 
-const Header = ({ history }) => {
+const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (menuOpen) {
@@ -14,10 +16,15 @@ const Header = ({ history }) => {
       closeMenu();
     }
 
-    history.listen(() => {
+    // Listen for route changes to close the menu
+    const unlisten = () => {
       setMenuOpen(false);
-    });
-  }, [menuOpen, history]);
+    };
+
+    return () => {
+      unlisten();
+    };
+  }, [menuOpen, location.pathname]); // Trigger the effect on location change
 
   const menuToggle = () => {
     setDisabled(true);
@@ -27,12 +34,12 @@ const Header = ({ history }) => {
     }, 1500);
     setMenuOpen(!menuOpen);
   };
+
   return (
     <div className="header">
       <div className={`logo header-item`}>
         <Link to="/">
-          {/* changed */}
-          <h2 id = "logo">Sharmil<span className="dev">.dev</span></h2>
+          <h2 id="logo">Sharmil<span className="dev">.dev</span></h2>
         </Link>
       </div>
       <div
@@ -47,4 +54,4 @@ const Header = ({ history }) => {
   );
 };
 
-export default withRouter(Header);
+export default Header;
